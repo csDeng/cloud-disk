@@ -2,7 +2,7 @@
 package types
 
 type UserDetailRequest struct {
-	Identify string `json:"identify"`
+	Identity string `json:"identity"`
 }
 
 type UserDetailResponse struct {

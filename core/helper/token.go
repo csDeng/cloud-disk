@@ -23,3 +23,7 @@ func GenerateToken(id int, identify string, name string) (string, error) {
 	}
 	return t, nil
 }
+
+// func ParseToken(token string) (uc *define.UserClaim) {
+// 	// jwt.
+// }

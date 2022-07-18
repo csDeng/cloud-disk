@@ -3,7 +3,7 @@
 参考： [【项目实战】基于Go-zero实现网盘系统_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1cr4y1s7H4?p=2&vd_source=620efb0bc3b2b0b7169e8564f7f527a8)
 
 注：**改动比较大**
-  
+
 ## 环境准备
 
 * Golang 1.18
@@ -188,8 +188,6 @@ Starting server at 0.0.0.0:8888...
 
 
 
-
-
 * 注意，后续修改了 api 文件，都可以直接使用命令快速生成模板
 
 ```shell
@@ -210,6 +208,10 @@ goctl api go -api core.api -dir . -style go_zero
 * **公共文件存储池**：存储文件信息
 * **用户存储池**：对公共文件存储池中文件信息的引用
 * **文件分享**
+
+# 邮件服务
+
+[jordan-wright/email: Robust and flexible email library for Go (github.com)](https://github.com/jordan-wright/email)
 
 
 

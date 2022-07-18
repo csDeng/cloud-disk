@@ -2,9 +2,11 @@ package logic
 
 import (
 	"context"
+	"errors"
 
 	"core/core/internal/svc"
 	"core/core/internal/types"
+	"core/models"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +26,18 @@ func NewUserDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserDe
 }
 
 func (l *UserDetailLogic) UserDetail(req *types.UserDetailRequest) (resp *types.UserDetailResponse, err error) {
-	// todo: add your logic here and delete this line
-
+	// 获取用户详细信息
+	user := new(models.UserBasic)
+	engine := models.Engine
+	has, err := engine.Where("identity=?", req.Identity).Get(user)
+	if err != nil {
+		return nil, err
+	}
+	if !has {
+		return nil, errors.New("用户不存在")
+	}
+	resp = new(types.UserDetailResponse)
+	resp.Name = user.Name
+	resp.Email = user.Email
 	return
 }
