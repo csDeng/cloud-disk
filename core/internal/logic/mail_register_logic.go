@@ -25,6 +25,9 @@ func NewMailRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Mail
 }
 
 func (l *MailRegisterLogic) MailRegister(req *types.MailRegisterRequest) (resp *types.MailRegisterResponse, err error) {
+
+
+	
 	err = helper.SendEmailCode(req.Email, "123456")
 	if err != nil {
 		return nil, err

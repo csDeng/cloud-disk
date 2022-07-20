@@ -1,0 +1,7 @@
+FROM mysql:5.7
+
+WORKDIR /data/mysql
+ENV MYSQL_ROOT_PASSWORD=root
+
+EXPOSE 3306
+
