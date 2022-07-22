@@ -1,7 +1,6 @@
 package helper
 
 import (
-	"core/core/define"
 	"crypto/tls"
 	"fmt"
 	"log"
@@ -12,7 +11,7 @@ import (
 
 // 邮箱验证码发送
 func SendEmailCode(mail, code string) error {
-	emailConfig := define.EmailConfigObject
+	emailConfig := EmailConfigObject
 	e := email.NewEmail()
 	e.From = fmt.Sprintf("<%s>", emailConfig.From)
 	e.To = []string{mail}

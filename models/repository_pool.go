@@ -2,21 +2,23 @@ package models
 
 import "time"
 
-type UserBasic struct {
-	Id       int    `xorm:"'id' pk" `
+type RepositoryPool struct {
+	Id       int    `xorm:"'id' pk"`
 	Identity string `xorm:"'identity'"`
+	Hash     string `xorm:"'hash'"`
 	Name     string `xorm:"'name'"`
-	Password string `xorm:"'password'"`
-	Email    string `xorm:"'email'"`
+	Ext      string `xorm:"'ext'"`
+	Size     int    `xorm:"'size'"`
+	Path     string `xorm:"'path'"`
 
 	CreatedAt time.Time `xorm:"'created_at' created"`
 	UpdatedAt time.Time `xorm:"'updated_at' updated"`
 	DeletedAt time.Time `xorm:"'deleted_at' deleted"`
 }
 
-var UserBasicName = "user_basic"
+var RepositoryPoolName = "repository_pool"
 
 // TableName 会将 UserBasic 的表名重写为 `user_basic`
-func (*UserBasic) TableName() string {
-	return UserBasicName
+func (*RepositoryPool) TableName() string {
+	return RepositoryPoolName
 }

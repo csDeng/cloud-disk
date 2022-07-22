@@ -1,7 +1,7 @@
 package test
 
 import (
-	"core/core/define"
+	"core/core/helper"
 	"crypto/tls"
 	"fmt"
 	"net/smtp"
@@ -11,7 +11,7 @@ import (
 )
 
 func TestSendEmail(t *testing.T) {
-	emailConfig := define.EmailConfigObject
+	emailConfig := helper.EmailConfigObject
 	e := email.NewEmail()
 	e.From = fmt.Sprintf("<%s>", emailConfig.From)
 	e.To = []string{"553537528@qq.com"}

@@ -2,10 +2,12 @@ package helper
 
 import (
 	"core/core/define"
+	"errors"
 
 	"github.com/golang-jwt/jwt/v4"
 )
 
+// 生成token
 func GenerateToken(id int, identify string, name string) (string, error) {
 	uc := define.UserClaim{
 		Id:       id,
@@ -24,6 +26,17 @@ func GenerateToken(id int, identify string, name string) (string, error) {
 	return t, nil
 }
 
-// func ParseToken(token string) (uc *define.UserClaim) {
-// 	// jwt.
-// }
+// 解析token
+func ParseToken(token string) (uc *define.UserClaim, err error) {
+	uc = new(define.UserClaim)
+	claims, err := jwt.ParseWithClaims(token, uc, func(t *jwt.Token) (interface{}, error) {
+		return []byte(define.JwtKey), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	if !claims.Valid {
+		return uc, errors.New("token is invalid")
+	}
+	return uc, nil
+}

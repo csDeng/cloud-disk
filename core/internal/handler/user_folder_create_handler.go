@@ -1,24 +1,26 @@
 package handler
 
 import (
+	"net/http"
+
+	"core/core/define"
 	"core/core/internal/logic"
 	"core/core/internal/svc"
 	"core/core/internal/types"
-	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func MailRegisterHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func UserFolderCreateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.MailRegisterRequest
+		var req types.UserFolderCreateRequest
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.Error(w, err)
 			return
 		}
 
-		l := logic.NewMailRegisterLogic(r.Context(), svcCtx)
-		resp, err := l.MailRegister(&req)
+		l := logic.NewUserFolderCreateLogic(r.Context(), svcCtx)
+		resp, err := l.UserFolderCreate(&req, r.Header.Get(define.HKOBJ.UserIdentity))
 		if err != nil {
 			httpx.Error(w, err)
 		} else {

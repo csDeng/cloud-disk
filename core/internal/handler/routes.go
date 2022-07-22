@@ -29,4 +29,42 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 		},
 	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.AuthMiddleware},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/register",
+					Handler: UserRegisterHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/file/upload",
+					Handler: FileUploadHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/repository/save",
+					Handler: UserRepositorySaveHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/user/repository",
+					Handler: UserFileListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPut,
+					Path:    "/user/repository",
+					Handler: EditFileNameHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/folder",
+					Handler: UserFolderCreateHandler(serverCtx),
+				},
+			}...,
+		),
+	)
 }
