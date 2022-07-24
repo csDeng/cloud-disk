@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.0'
 
 services:
   redis: 
@@ -6,14 +6,14 @@ services:
     build: ./redis
     restart: always
     ports:
-      - "6379:6379"
+      - "6380:6379"
 
   mysql:
     container_name: "mysql"
     build: ./mysql
     restart: always
     ports:
-      - "3306:3306"
+      - "3307:3306"
 
   phpmyadmin:
     container_name: "phpmyadmin"
@@ -27,3 +27,17 @@ services:
       # - PMA_ARBITRARY=1 允许登录任何ip
     ports:
       - "8888:80"
+    depends_on:
+      - mysql
+  
+  # 使用 nginx 解决 phpmyadmin 的跨域问题 
+  nginx:
+    container_name: "nginx"
+    links:
+      - phpmyadmin
+    build: ./nginx
+    ports:
+      - "8889:80"
+    restart: always
+    depends_on:
+      - phpmyadmin

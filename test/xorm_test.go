@@ -2,6 +2,7 @@ package test
 
 import (
 	"bytes"
+	"core/core/helper"
 	"core/models"
 	"encoding/json"
 	"fmt"
@@ -12,9 +13,10 @@ import (
 )
 
 func TestXormTest(t *testing.T) {
-	user, password, dbname, charset := "root", "root", "cloud_disk", "utf8mb4"
-	cnf := fmt.Sprintf("%s:%s@/%s?charset=%s",
-		user, password, dbname, charset)
+	mysql := helper.MySqlConfigObject
+	host, port, user, password, dbname, charset := mysql.Server, mysql.Port, mysql.User, mysql.Password, mysql.DB, "utf8mb4"
+	cnf := fmt.Sprintf("%s:%s@(%s:%d)/%s?charset=%s",
+		user, password, host, port, dbname, charset)
 	engine, err := xorm.NewEngine("mysql", cnf)
 	if err != nil {
 		t.Fatal(err)
@@ -43,9 +45,10 @@ func TestXormTest(t *testing.T) {
 }
 
 func TestInsert(t *testing.T) {
-	user, password, dbname, charset := "root", "root", "cloud_disk", "utf8mb4"
-	cnf := fmt.Sprintf("%s:%s@/%s?charset=%s",
-		user, password, dbname, charset)
+	mysql := helper.MySqlConfigObject
+	host, port, user, password, dbname, charset := mysql.Server, mysql.Port, mysql.User, mysql.Password, mysql.DB, "utf8mb4"
+	cnf := fmt.Sprintf("%s:%s@(%s:%d)/%s?charset=%s",
+		user, password, host, port, dbname, charset)
 	engine, err := xorm.NewEngine("mysql", cnf)
 	if err != nil {
 		t.Fatal(err)

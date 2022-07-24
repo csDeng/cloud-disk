@@ -1,6 +1,7 @@
 package models
 
 import (
+	"core/core/helper"
 	"fmt"
 	"log"
 
@@ -13,9 +14,10 @@ import (
 var Engine = getEngine()
 
 func getEngine() *xorm.Engine {
-	user, password, dbname, charset := "root", "root", "cloud_disk", "utf8mb4"
-	cnf := fmt.Sprintf("%s:%s@/%s?charset=%s",
-		user, password, dbname, charset)
+	mysql := helper.MySqlConfigObject
+	host, port, user, password, dbname, charset := mysql.Server, mysql.Port, mysql.User, mysql.Password, mysql.DB, "utf8mb4"
+	cnf := fmt.Sprintf("%s:%s@(%s:%d)/%s?charset=%s",
+		user, password, host, port, dbname, charset)
 	engine, err := xorm.NewEngine("mysql", cnf)
 	if err != nil {
 		log.Printf("Xorm Engine error: %v \r\n", err)
