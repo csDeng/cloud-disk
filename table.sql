@@ -76,4 +76,4 @@ CREATE TABLE `share_basic` (
 
 
 -- 插入测试账号
- insert into `user_basic` (name, password, email) values ('test','testpwd','123@123.com');
+ insert into `user_basic` (name, password, email) values ('test','c06db68e819be6ec3d26c6038d8e8d1f','123@123.com');

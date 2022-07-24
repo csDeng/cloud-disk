@@ -1,13 +1,135 @@
 service core-api {
+	// 用户登录
 	@handler UserLogin
 	post /user/login(LoginRequest) returns (LoginResponse)
 	
+	// 用户详情
 	@handler UserDetail
 	get /user/detail(UserDetailRequest) returns (UserDetailResponse)
+	
+	// 邮箱注册
+	@handler MailRegister
+	post /mail/register(MailRegisterRequest) returns (MailRegisterResponse)
+	
+}
+
+@server (
+	// 鉴权中间件
+	middleware: AuthMiddleware
+)
+service core-api {
+	// 用户注册
+	@handler UserRegister
+	post /user/register(UserRegisterRequest) returns (UserRegisterResponse)
+	
+	// 文件上传
+	@handler FileUpload
+	post /file/upload(FileUploadRequest) returns(FileUploadResponse)
+	
+	// 用户文件关联存储
+	@handler UserRepositorySave
+	post /user/repository/save(UserRepositoryRequest) returns(UserRepositoryResponse)
+	
+	// 用户文件列表
+	@handler UserFileList
+	get /user/repository(UserFileListRequest) returns(UserFileListResponse)
+	
+	// 文件名称修改
+	@handler EditFileName
+	put /user/repository(EditFileNameRequest) returns(EditFileNameResponse)
+	
+	// 用户文件夹创建
+	@handler UserFolderCreate
+	post /user/folder(UserFolderCreateRequest) returns(UserFolderCreateResponse)
+}
+
+type UserFolderCreateRequest {
+	ParentId int    `json:"parent_id"`
+	Name     string `json:"name"`
+}
+
+type UserFolderCreateResponse {
+	Identity string `json:"identity"`
+}
+
+type EditFileNameRequest {
+	Identity string `json:"identity"` // 文件的唯一标识
+	Name     string `json:"name"`     // 文件新名称
+}
+
+type EditFileNameResponse {
+}
+
+type UserFileListRequest {
+	Id   int `json:"id,optional"` // 文件夹id
+	Page int `json:"page,optional"`
+	Size int `json:"size,optional"`
+}
+
+type UserFileListResponse {
+	List  []*UserFile `json:"list"`
+	Count int         `json:"count"`
+}
+
+type UserFile {
+	Id                 int    `json:"id"`
+	Name               string `json:"name"`
+	Ext                string `json:"ext"`
+	Size               int    `json:"size"`
+	Path               string `json:"path"`
+	Identity           string `json:"identity"`
+	RepositoryIdentity string `json:"repository_identity"`
+}
+
+type UserRepositoryRequest {
+	ParentId           int    `json:"parent_id"`
+	RepositoryIdentity string `json:"repository_identity"`
+	Ext                string `json:"ext"`
+	Name               string `json:"name"`
+}
+
+type UserRepositoryResponse {
+	Identity string `json:"identity"`
+}
+
+type FileUploadRequest {
+	Hash string `json:"hash,optional"`
+	Name string `json:"name,optional"`
+	Ext  string `json:"ext,optional"`
+	Size int64  `json:"size,optional"`
+	Path string `json:"path,optional"`
+}
+
+type FileUploadResponse {
+	Identity string `json:"identity"`
+	Name     string `json:"name,optional"`
+	Ext      string `json:"ext,optional"`
+	Size     int64  `json:"size,optional"`
+	Path     string `json:"path,optional"`
+}
+
+type UserRegisterRequest {
+	Code     string `json:"code"`
+	Email    string `json:"email"`
+	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
+type UserRegisterResponse {
+	Identity string `json:"identity"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+}
+
+type MailRegisterRequest {
+	Email string `json:"email"`
+}
+
+type MailRegisterResponse {
 }
 
 type UserDetailRequest {
-	Identify string `json:"identify"`
+	Identity string `json:"identity"`
 }
 type UserDetailResponse {
 	Name  string `json:"name"`
