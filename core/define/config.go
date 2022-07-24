@@ -13,6 +13,14 @@ type RedisConfig struct {
 	RedisPrefix string `ini:"prefix"`
 }
 
+type MysqlConfig struct {
+	Server   string `ini:"server"`
+	Port     int    `ini:"port"`
+	User     string `ini:"user"`
+	Password string `ini:"password"`
+	DB       string `ini:"db"`
+}
+
 type CosConfig struct {
 	Server    string `ini:"server"`
 	SecretID  string `ini:"secret_id"`

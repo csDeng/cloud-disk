@@ -26,6 +26,18 @@ func GetConfigFile() *ini.File {
 	return cfg
 }
 
+var MySqlConfigObject = getMysqlConfig()
+
+func getMysqlConfig() *define.MysqlConfig {
+	cfg := GetConfigFile()
+	config := define.MysqlConfig{}
+	err := cfg.Section("mysql").MapTo(&config)
+	if err != nil {
+		log.Fatal("fail to parse mysql config, error: ", err)
+	}
+	return &config
+}
+
 var EmailConfigObject = getEmailConfig()
 
 func getEmailConfig() *define.EmailConfig {

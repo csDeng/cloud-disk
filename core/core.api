@@ -41,6 +41,16 @@ service core-api {
 	// 用户文件夹创建
 	@handler UserFolderCreate
 	post /user/folder(UserFolderCreateRequest) returns(UserFolderCreateResponse)
+	
+	@handler UserFileDel
+	delete /user/file(UserFileDelRequest) returns(UserFileDelResponse)
+}
+
+type UserFileDelRequest {
+	Identity string `json:"identity"`
+}
+
+type UserFileDelResponse {
 }
 
 type UserFolderCreateRequest {
