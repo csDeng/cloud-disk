@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"fmt"
 
 	"core/core/define"
 	"core/core/internal/svc"
@@ -78,7 +77,8 @@ func (l *UserFileListLogic) UserFileList(req *types.UserFileListRequest, userIde
 	err = models.Engine.Table(urName).
 		Where("parent_id = ? AND user_identity = ?", req.Id, userIdentity).
 		Select("user_repository.id, user_repository.name, user_repository.ext, repository_pool.size,repository_pool.path,user_repository.identity, repository_pool.identity AS repository_identity").
-		Join("LEFT", pName, fmt.Sprintf("%s.repository_identity = %s.Identity", urName, pName)).
+		Join("LEFT", pName, "user_repository.repository_identity = repository_pool.Identity").
+		Where("user_repository.deleted_at IS NULL").
 		Limit(size, offset).Find(&uf)
 	if err != nil {
 		return nil, err

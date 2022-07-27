@@ -9,7 +9,7 @@ import (
 	"core/core/internal/svc"
 	"core/core/internal/types"
 	"core/models"
-	"core/rds"
+	"core/redis"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -30,13 +30,13 @@ func NewUserRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *User
 
 func (l *UserRegisterLogic) UserRegister(req *types.UserRegisterRequest) (resp *types.UserRegisterResponse, err error) {
 	key := helper.GetMailRegKey(req.Email)
-	redis := rds.Redis
+	redis := redis.Redis
 	v, err := redis.Get(l.ctx, key).Result()
 	if err != nil {
-		return nil, errors.New("当前邮箱没有获取验证码!")
+		return nil, errors.New("当前邮箱没有获取验证码")
 	}
 	if v != req.Code {
-		return nil, errors.New("验证码错误!")
+		return nil, errors.New("验证码错误")
 	}
 	user := new(models.UserBasic)
 	cnt, err := models.Engine.Where("name = ?", req.Name).Count(user)
@@ -44,7 +44,7 @@ func (l *UserRegisterLogic) UserRegister(req *types.UserRegisterRequest) (resp *
 		return nil, err
 	}
 	if cnt > 0 {
-		return nil, errors.New(fmt.Sprintf("用户名: %s 已存在", req.Name))
+		return nil, fmt.Errorf("用户名: %s 已存在", req.Name)
 	}
 	user.Identity = helper.GenerateUuid()
 	user.Name = req.Name

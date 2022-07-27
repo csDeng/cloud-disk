@@ -75,3 +75,15 @@ func getCosCfg() *define.CosConfig {
 	}
 	return &config
 }
+
+var TokenConfigObject = getTokenCfg()
+
+func getTokenCfg() *define.TokenConfig {
+	cfg := GetConfigFile()
+	config := define.TokenConfig{}
+	err := cfg.Section("token").MapTo(&config)
+	if err != nil {
+		log.Fatal("fail to parse token config: error: ", err)
+	}
+	return &config
+}

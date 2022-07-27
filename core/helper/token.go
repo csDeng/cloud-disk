@@ -8,10 +8,10 @@ import (
 )
 
 // 生成token
-func GenerateToken(id int, identify string, name string) (string, error) {
+func GenerateToken(id int, identity string, name string) (string, error) {
 	uc := define.UserClaim{
 		Id:       id,
-		Identify: identify,
+		Identity: identity,
 		Name:     name,
 	}
 
@@ -19,7 +19,7 @@ func GenerateToken(id int, identify string, name string) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, uc)
 
 	// 创建并返回一个完整的,签署的JWT
-	t, err := token.SignedString([]byte(define.JwtKey))
+	t, err := token.SignedString([]byte(TokenConfigObject.Secret))
 	if err != nil {
 		return "", err
 	}
@@ -30,7 +30,7 @@ func GenerateToken(id int, identify string, name string) (string, error) {
 func ParseToken(token string) (uc *define.UserClaim, err error) {
 	uc = new(define.UserClaim)
 	claims, err := jwt.ParseWithClaims(token, uc, func(t *jwt.Token) (interface{}, error) {
-		return []byte(define.JwtKey), nil
+		return []byte(TokenConfigObject.Secret), nil
 	})
 	if err != nil {
 		return nil, err

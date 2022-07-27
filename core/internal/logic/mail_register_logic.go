@@ -6,7 +6,7 @@ import (
 	"core/core/internal/svc"
 	"core/core/internal/types"
 	"core/models"
-	"core/rds"
+	"core/redis"
 	"errors"
 	"fmt"
 	"time"
@@ -38,20 +38,20 @@ func (l *MailRegisterLogic) MailRegister(req *types.MailRegisterRequest) (resp *
 	if cnt > 0 {
 		return nil, errors.New("邮箱已存在")
 	}
-	redis := rds.Redis
+	rds := redis.Redis
 	key := helper.GetMailRegKey(req.Email)
 
 	// 判断是否以获取过随机码
-	v, err := redis.Exists(l.ctx, key).Result()
+	v, err := rds.Exists(l.ctx, key).Result()
 	if err != nil {
 		return nil, err
 	}
 	if v > 0 {
-		vv, err := redis.Do(l.ctx, "TTL", key).Result()
+		vv, err := rds.Do(l.ctx, "TTL", key).Result()
 		if err != nil {
 			return nil, err
 		}
-		return nil, errors.New(fmt.Sprintf("验证码已发送,请 %d s 后重试", vv.(int64)))
+		return nil, fmt.Errorf("验证码已发送,请 %d s 后重试", vv.(int64))
 	}
 
 	// 获取随机码
@@ -61,7 +61,7 @@ func (l *MailRegisterLogic) MailRegister(req *types.MailRegisterRequest) (resp *
 	if err != nil {
 		return nil, err
 	}
-	_, err = redis.Set(l.ctx, key, code, 300*time.Second).Result()
+	_, err = rds.Set(l.ctx, key, code, 300*time.Second).Result()
 	if err != nil {
 		return nil, err
 	}

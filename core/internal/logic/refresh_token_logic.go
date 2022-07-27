@@ -2,54 +2,43 @@ package logic
 
 import (
 	"context"
-	"errors"
 	"time"
 
 	"core/core/helper"
 	"core/core/internal/svc"
 	"core/core/internal/types"
-	"core/models"
 	"core/redis"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type UserLoginLogic struct {
+type RefreshTokenLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewUserLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserLoginLogic {
-	return &UserLoginLogic{
+func NewRefreshTokenLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RefreshTokenLogic {
+	return &RefreshTokenLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *UserLoginLogic) UserLogin(req *types.LoginRequest) (resp *types.LoginResponse, err error) {
-	// 登录接口
+func (l *RefreshTokenLogic) RefreshToken(token string) (resp *types.RefreshTokenResponse, err error) {
 	tokenCfg := helper.TokenConfigObject
-	// 1. 从数据库获取登录用户信息
-
-	engine := models.Engine
-	user := new(models.UserBasic)
-	has, err := engine.Where("name = ? AND password = ?", req.Name, helper.Md5(req.Password)).Get(user)
+	uc, err := helper.ParseToken(token)
 	if err != nil {
 		return nil, err
 	}
-	if !has {
-		return nil, errors.New("用户名或密码错误")
-	}
-
-	// 2. 生成 refresh_token
-	refresh_token, err := helper.GenerateToken(user.Id, user.Identity, user.Name)
+	// 2. 生成 token
+	token, err = helper.GenerateToken(uc.Id, uc.Identity, uc.Name)
 	if err != nil {
 		return nil, err
 	}
-	// 3. 生成token
-	token, err := helper.GenerateToken(user.Id, user.Identity, user.Name)
+	// 3. 生成refresh_token
+	refresh_token, err := helper.GenerateToken(uc.Id, uc.Identity, uc.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -62,13 +51,13 @@ func (l *UserLoginLogic) UserLogin(req *types.LoginRequest) (resp *types.LoginRe
 	if err != nil {
 		return nil, err
 	}
+
 	err = rds.SetEX(l.ctx, rtk, 1, time.Second*time.Duration(tokenCfg.RefreshTokenTime)).Err()
 	if err != nil {
 		return nil, err
 	}
-	resp = new(types.LoginResponse)
+	resp = new(types.RefreshTokenResponse)
 	resp.Token = token
 	resp.RefreshToken = refresh_token
 	return
-
 }

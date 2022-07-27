@@ -27,6 +27,16 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/mail/register",
 				Handler: MailRegisterHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/share",
+				Handler: GetShareBasicDetailHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/refresh",
+				Handler: RefreshTokenHandler(serverCtx),
+			},
 		},
 	)
 
@@ -68,6 +78,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Method:  http.MethodDelete,
 					Path:    "/user/file",
 					Handler: UserFileDelHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/file/move",
+					Handler: UserFileMoveHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/share",
+					Handler: ShareBasicCreateHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/share/list",
+					Handler: ShareBasicListHandler(serverCtx),
 				},
 			}...,
 		),

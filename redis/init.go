@@ -1,4 +1,4 @@
-package rds
+package redis
 
 import (
 	"core/core/helper"

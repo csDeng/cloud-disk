@@ -19,6 +19,8 @@ func getEngine() *xorm.Engine {
 	cnf := fmt.Sprintf("%s:%s@(%s:%d)/%s?charset=%s",
 		user, password, host, port, dbname, charset)
 	engine, err := xorm.NewEngine("mysql", cnf)
+	// 显示 sql 语句
+	engine.ShowSQL(true)
 	if err != nil {
 		log.Printf("Xorm Engine error: %v \r\n", err)
 		return nil

@@ -18,3 +18,8 @@ func TestRedisConfig(t *testing.T) {
 	rds := helper.RedisConfigObject
 	fmt.Println(rds)
 }
+
+func TestTokenConfig(t *testing.T) {
+	tokenCfg := helper.TokenConfigObject
+	fmt.Println(tokenCfg.TokenTime, tokenCfg.RefreshTokenTime, tokenCfg.Secret)
+}

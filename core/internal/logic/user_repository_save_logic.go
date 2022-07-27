@@ -27,10 +27,12 @@ func NewUserRepositorySaveLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 }
 
 func (l *UserRepositorySaveLogic) UserRepositorySave(req *types.UserRepositoryRequest, userIdentity string) (resp *types.UserRepositoryResponse, err error) {
-	// todo: add your logic here and delete this line
+
 	ur := new(models.UserRepository)
 	cnt, err := models.Engine.Where("user_identity = ?", userIdentity).And("repository_identity = ?", req.RepositoryIdentity).Count(ur)
-
+	if err != nil {
+		return nil, err
+	}
 	if cnt > 0 {
 		return nil, errors.New("请勿重复关联")
 	}
