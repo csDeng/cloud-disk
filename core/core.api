@@ -66,7 +66,59 @@ service core-api {
 	@handler ShareBasicList
 	get /share/list(ShareBasicListRequest) returns(ShareBasicListResponse)
 	
+	// 文件上传基本信息处理
+	@handler FileUploadPrepare
+	post /file/upload/prepare(FileUploadPrepareRequest) returns(FileUploadPrepareResponse)
+	
+	// 文件的分片上传
+	@handler FileChunkUpload
+	post /file/chunk/upload(FileChunkUploadRequest) returns(FileChunkUploadResponse)
+	
+	// 文件分片上传完成
+	@handler FileChunkSuccess
+	post /file/chunk/success(FileChunkSuccessRequest) returns(FileChunkSuccessResponse)
 }
+
+type (
+	FileChunkSuccessRequest {
+		Parts    []*PartObject `json:"parts"`
+		Key      string        `json:"key"`
+		UploadId string        `json:"upload_id"`
+	}
+	FileChunkSuccessResponse {
+	}
+
+	PartObject {
+		PartNumber int    `json:"part_number"`
+		ETag       string `json:"e_tag"`
+	}
+)
+
+type (
+	FileChunkUploadRequest {
+		// 以表单的形式传参数
+		// Key string
+		// UploadId string
+		// PartNumber int
+	}
+
+	FileChunkUploadResponse {
+		ETag string `json:"e_tag"`
+	}
+)
+
+type (
+	FileUploadPrepareRequest {
+		Md5  string `json:"md5"`
+		Name string `json:"name"`
+		Ext  string `json:"ext"`
+	}
+	FileUploadPrepareResponse {
+		Identity string `json:"identity"`
+		UploadId string `json:"uploadId"`
+		Key      string `json:"key"`
+	}
+)
 
 type (
 	RefreshTokenResponse {

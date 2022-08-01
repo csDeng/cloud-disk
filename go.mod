@@ -7,7 +7,9 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/golang-jwt/jwt/v4 v4.4.2
+	github.com/google/uuid v1.3.0
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
+	github.com/tencentyun/cos-go-sdk-v5 v0.7.35
 	github.com/zeromicro/go-zero v1.3.5
 	xorm.io/xorm v1.3.1
 )
@@ -24,7 +26,6 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
-	github.com/google/uuid v1.3.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/mattn/go-colorable v0.1.9 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
@@ -41,7 +42,6 @@ require (
 	github.com/prometheus/procfs v0.7.3 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/syndtr/goleveldb v1.0.0 // indirect
-	github.com/tencentyun/cos-go-sdk-v5 v0.7.35 // indirect
 	go.opentelemetry.io/otel v1.8.0 // indirect
 	go.opentelemetry.io/otel/exporters/jaeger v1.8.0 // indirect
 	go.opentelemetry.io/otel/exporters/zipkin v1.8.0 // indirect
