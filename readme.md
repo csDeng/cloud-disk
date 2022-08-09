@@ -1,10 +1,6 @@
-# 网盘系统
+# 基于COS的网盘系统
 
-参考： [【项目实战】基于Go-zero实现网盘系统_哔哩哔哩_bilibili](https://www.bilibili.com/video/BV1cr4y1s7H4?p=2&vd_source=620efb0bc3b2b0b7169e8564f7f527a8)
-
-注：**改动比较大**
-  
-## 环境准备 
+## 环境准备
 
 
 * Golang 1.18
@@ -147,22 +143,22 @@ goctl api new core
 ```shell
 |____go.mod
 |____go.sum
-|____greet.api // api接口与类型定义
+|____core.api // api接口与类型定义
 |____etc // 网关层配置文件
-| |____greet-api.yaml
+| |____core-api.yaml
 |____internal
 | |____config // 配置-对应etc下配置文件
 | | |____config.go
 | |____handler // 视图函数层, 路由与处理器
 | | |____routes.go
-| | |____greethandler.go
+| | |____corehandler.go
 | |____logic // 逻辑处理
-| | |____greetlogic.go
+| | |____corelogic.go
 | |____svc // 依赖资源, 封装 rpc 对象的地方
 | | |____servicecontext.go
 | |____types // 中间类型
 | | |____types.go
-|____greet.go // main.go 入口
+|____core.go // main.go 入口
 
 ```
 
@@ -197,22 +193,34 @@ goctl api go -api core.api -dir . -style go_zero
 
 生成模板之后，再到 `logic` 目录去相应的文件里面写业务逻辑。
 
-
-
 ## 项目设计
 
 数据库设计与业务逻辑设计
 
-### 数据库
+## 数据库
 
 * **用户信息**：存储用户基本信息，用于登录
 * **公共文件存储池**：存储文件信息
 * **用户存储池**：对公共文件存储池中文件信息的引用
 * **文件分享**
 
-# 邮件服务
+## 邮件服务
 
 [jordan-wright/email: Robust and flexible email library for Go (github.com)](https://github.com/jordan-wright/email)
+
+## 项目部署
+
+* 数据库部署
+
+进入docker 目录使用，`docker-compose up -d` 启动数据库服务
+
+* 后端服务启动
+
+```shell
+./build.sh
+```
+
+
 
 
 
