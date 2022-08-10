@@ -3,13 +3,11 @@ package logic
 import (
 	"context"
 	"errors"
-	"time"
 
 	"core/core/helper"
 	"core/core/internal/svc"
 	"core/core/internal/types"
 	"core/models"
-	"core/redis"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -30,7 +28,6 @@ func NewUserLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserLog
 
 func (l *UserLoginLogic) UserLogin(req *types.LoginRequest) (resp *types.LoginResponse, err error) {
 	// 登录接口
-	tokenCfg := helper.TokenConfigObject
 	// 1. 从数据库获取登录用户信息
 
 	engine := models.Engine
@@ -44,25 +41,12 @@ func (l *UserLoginLogic) UserLogin(req *types.LoginRequest) (resp *types.LoginRe
 	}
 
 	// 2. 生成 refresh_token
-	refresh_token, err := helper.GenerateToken(user.Id, user.Identity, user.Name)
+	refresh_token, err := helper.GenerateToken(user.Id, user.Identity, user.Name, true)
 	if err != nil {
 		return nil, err
 	}
 	// 3. 生成token
-	token, err := helper.GenerateToken(user.Id, user.Identity, user.Name)
-	if err != nil {
-		return nil, err
-	}
-	// 4. 保存到redis
-	tk := helper.GetTokenKey(token)
-	rtk := helper.GetRefreshTokenKey(refresh_token)
-	rds := redis.Redis
-
-	err = rds.SetEX(l.ctx, tk, 1, time.Second*time.Duration(tokenCfg.TokenTime)).Err()
-	if err != nil {
-		return nil, err
-	}
-	err = rds.SetEX(l.ctx, rtk, 1, time.Second*time.Duration(tokenCfg.RefreshTokenTime)).Err()
+	token, err := helper.GenerateToken(user.Id, user.Identity, user.Name, false)
 	if err != nil {
 		return nil, err
 	}
