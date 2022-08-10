@@ -1,13 +1,14 @@
 package define
 
-import "github.com/golang-jwt/jwt/v4"
+import jwtpkg "github.com/golang-jwt/jwt"
 
 // token 里面包含的用户信息
 type UserClaim struct {
-	Id       int
-	Identity string
-	Name     string
-	jwt.RegisteredClaims
+	Id             int
+	Identity       string
+	Name           string
+	RefreshTokenId string // refresh_token 已用
+	jwtpkg.StandardClaims
 }
 
 type TokenConfig struct {
