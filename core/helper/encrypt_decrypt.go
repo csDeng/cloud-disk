@@ -4,6 +4,7 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/md5"
+
 	"encoding/base64"
 	"errors"
 )
@@ -62,11 +63,11 @@ func AesDecrypt(cipherText string) (string, error) {
 	if err != nil {
 		return "", errors.New("base64 decode error")
 	}
+
 	c, err := aes.NewCipher(s)
 	if err != nil {
 		return "", err
 	}
-
 	decrypter := cipher.NewCFBDecrypter(c, i)
 	plainText := make([]byte, len(base64Res))
 	decrypter.XORKeyStream(plainText, []byte(base64Res))

@@ -10,7 +10,7 @@ func TestToken(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("%v, %T", token, token)
+	t.Logf("%x, %T", token, token)
 	uc, err := helper.ParseToken(token)
 	if err != nil {
 		t.Log(err)
