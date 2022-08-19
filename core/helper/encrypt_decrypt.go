@@ -4,6 +4,8 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/md5"
+	"encoding/base64"
+	"errors"
 )
 
 func getByte(s string) []byte {
@@ -45,19 +47,28 @@ func AesEncrypt(plainText string) (string, error) {
 
 	cfb.XORKeyStream(cipherText, []byte(plainText))
 
-	return string(cipherText), nil
+	// base 64 加密 避免二进制数据无法利用 token 传输
+	base64Res := base64.StdEncoding.EncodeToString(cipherText)
+	return base64Res, nil
 }
 
 func AesDecrypt(cipherText string) (string, error) {
 	s := getAesSecret()
 	i := getAesIV()
-
+	// fmt.Println("cipherText=>", cipherText)
+	// base 64 解码
+	base64Res, err := base64.StdEncoding.DecodeString(cipherText)
+	// fmt.Println("base64res=> ", base64Res)
+	if err != nil {
+		return "", errors.New("base64 decode error")
+	}
 	c, err := aes.NewCipher(s)
 	if err != nil {
 		return "", err
 	}
+
 	decrypter := cipher.NewCFBDecrypter(c, i)
-	plainText := make([]byte, len(cipherText))
-	decrypter.XORKeyStream(plainText, []byte(cipherText))
+	plainText := make([]byte, len(base64Res))
+	decrypter.XORKeyStream(plainText, []byte(base64Res))
 	return string(plainText), nil
 }

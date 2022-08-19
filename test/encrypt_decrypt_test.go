@@ -6,13 +6,13 @@ import (
 )
 
 func TestAesEncrypt(t *testing.T) {
-	p := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDaXBoZXIiOiJcdWZmZmRtRjNcdWZmZmReeFx1ZmZmZFx1ZmZmZFxuZVx1ZmZmZHBLXHVmZmZkQn9cdWZmZmRkXHVmZmZkXHUwMDNjdlx1MDAwZkJcdWZmZmTcpExcdTAwMTVcdWZmZmRqXHUwMDNlXHUwMDFkXHUwMDFjXHVmZmZkfEVcdWZmZmTXrj1cdWZmZmRsXHVmZmZkIiwiUmVmcmVzaFRva2VuSWQiOiI4NTRjNDdlOS0zMDZlLTQzOWQtOGQ2OS1hYmMxNWExZmQwNWUiLCJleHAiOjE2NjAxMzUyNTh9.EdKTA9whG4IIQ5ISrvV6oln8gteCeCmIwcCJRAB1P0s"
-	t.Logf("%x", p)
+	p := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6NiwiSWRlbnRpdHkiOiJjMjc4ZWRjNi0wYjJkLTQ3NzMtOWQ0Yy0xMzIzZDFhMjZjMjQiLCJOYW1lIjoibXluYW1lIiwiUmVmcmVzaFRva2VuSWQiOiJkZWNiNWE3ZS1kY2M1LTRhZGItYjkwNi1kY2FkMGNiOGEyODQiLCJleHAiOjE2NjA4OTQwNDd9.AAwMMGq48OuWsKSFz1lgWR9rJKAF7FBPIcW_xoXLy4M"
+	t.Logf("%T %+v\r\n", p, p)
 	c, err := helper.AesEncrypt(p)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Logf("cipher=> %+v", c)
+	t.Logf("cipher=> %T %+v\r\n", c, c)
 	pp, err := helper.AesDecrypt(c)
 	if err != nil {
 		t.Fatal(err)
