@@ -87,3 +87,15 @@ func getTokenCfg() *define.TokenConfig {
 	}
 	return &config
 }
+
+var AesCfgObj = getAesCfg()
+
+func getAesCfg() *define.AesCfg {
+	cfg := GetConfigFile()
+	config := define.AesCfg{}
+	err := cfg.Section("aes").MapTo(&config)
+	if err != nil {
+		log.Fatal("fail to parse aes config: error: ", err)
+	}
+	return &config
+}

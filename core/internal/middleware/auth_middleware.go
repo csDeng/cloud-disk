@@ -3,7 +3,6 @@ package middleware
 import (
 	"core/core/define"
 	"core/core/helper"
-	"core/redis"
 	"net/http"
 )
 
@@ -27,13 +26,6 @@ func (m *AuthMiddleware) Handle(next http.HandlerFunc) http.HandlerFunc {
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
 			w.Write([]byte(err.Error()))
-			return
-		}
-		rds := redis.Redis
-		_, err = rds.Get(r.Context(), helper.GetTokenKey(auth)).Result()
-		if err != nil {
-			w.WriteHeader(http.StatusUnauthorized)
-			w.Write([]byte("已过期"))
 			return
 		}
 		// fmt.Println(uc.Id, uc.Identity, uc.Name)

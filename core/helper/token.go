@@ -3,40 +3,62 @@ package helper
 import (
 	"core/core/define"
 	"errors"
+	"time"
 
-	"github.com/golang-jwt/jwt/v4"
+	jwtpkg "github.com/golang-jwt/jwt"
 )
 
 // 生成token
-func GenerateToken(id int, identity string, name string) (string, error) {
+func GenerateToken(id int, identity string, name string, isRefreshToken bool) (string, error) {
+	t := 0
+	if isRefreshToken {
+		t = TokenConfigObject.RefreshTokenTime
+	} else {
+		t = TokenConfigObject.TokenTime
+	}
+	ex := time.Now().Add(time.Minute * time.Duration(t)).Unix()
 	uc := define.UserClaim{
-		Id:       id,
-		Identity: identity,
-		Name:     name,
+		Id:             id,
+		Identity:       identity,
+		Name:           name,
+		RefreshTokenId: GenerateUuid(),
+		StandardClaims: jwtpkg.StandardClaims{
+			ExpiresAt: ex,
+		},
 	}
 
 	// 使用特定的 签名算法加密
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, uc)
+	token := jwtpkg.NewWithClaims(jwtpkg.SigningMethodHS256, uc)
 
+	// fmt.Println("TokenConfigObject.Secret=", TokenConfigObject.Secret)
 	// 创建并返回一个完整的,签署的JWT
-	t, err := token.SignedString([]byte(TokenConfigObject.Secret))
+	tt, err := token.SignedString([]byte(TokenConfigObject.Secret))
 	if err != nil {
 		return "", err
 	}
-	return t, nil
+
+	res, err := AesEncrypt(tt)
+	if err != nil {
+		return "", err
+	}
+	return res, err
 }
 
 // 解析token
-func ParseToken(token string) (uc *define.UserClaim, err error) {
-	uc = new(define.UserClaim)
-	claims, err := jwt.ParseWithClaims(token, uc, func(t *jwt.Token) (interface{}, error) {
+func ParseToken(token string) (*define.UserClaim, error) {
+	plain, err := AesDecrypt(token)
+	if err != nil {
+		return nil, err
+	}
+	uc := new(define.UserClaim)
+	claims, err := jwtpkg.ParseWithClaims(plain, uc, func(t *jwtpkg.Token) (interface{}, error) {
 		return []byte(TokenConfigObject.Secret), nil
 	})
 	if err != nil {
 		return nil, err
 	}
 	if !claims.Valid {
-		return uc, errors.New("token is invalid")
+		return nil, errors.New("token is invalid")
 	}
 	return uc, nil
 }
