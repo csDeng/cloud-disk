@@ -10,7 +10,7 @@ service core-api {
 	// 邮箱注册
 	@handler MailRegister
 	post /mail/register(MailRegisterRequest) returns (MailRegisterResponse)
-
+	
 	// 用户注册
 	@handler UserRegister
 	post /user/register(UserRegisterRequest) returns (UserRegisterResponse)

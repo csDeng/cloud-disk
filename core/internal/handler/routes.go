@@ -28,6 +28,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: MailRegisterHandler(serverCtx),
 			},
 			{
+				Method:  http.MethodPost,
+				Path:    "/user/register",
+				Handler: UserRegisterHandler(serverCtx),
+			},
+			{
 				Method:  http.MethodGet,
 				Path:    "/share",
 				Handler: GetShareBasicDetailHandler(serverCtx),
@@ -44,11 +49,6 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 		rest.WithMiddlewares(
 			[]rest.Middleware{serverCtx.AuthMiddleware},
 			[]rest.Route{
-				{
-					Method:  http.MethodPost,
-					Path:    "/user/register",
-					Handler: UserRegisterHandler(serverCtx),
-				},
 				{
 					Method:  http.MethodPost,
 					Path:    "/file/upload",

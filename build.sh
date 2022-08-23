@@ -48,4 +48,4 @@ docker build . -t 'dengchongsen/cloud_disk'
 echo 'docker push---'
 docker push dengchongsen/cloud_disk
 echo 'push success'
-sleep 5
+sleep 30
