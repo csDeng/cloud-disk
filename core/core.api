@@ -11,6 +11,10 @@ service core-api {
 	@handler MailRegister
 	post /mail/register(MailRegisterRequest) returns (MailRegisterResponse)
 	
+	// 用户注册
+	@handler UserRegister
+	post /user/register(UserRegisterRequest) returns (UserRegisterResponse)
+	
 	// 获取分享的文件信息
 	@handler GetShareBasicDetail
 	get /share(ShareBasicDetailRequest) returns (ShareBasicDetailResponse)
@@ -25,10 +29,6 @@ service core-api {
 	middleware: AuthMiddleware
 )
 service core-api {
-	
-	// 用户注册
-	@handler UserRegister
-	post /user/register(UserRegisterRequest) returns (UserRegisterResponse)
 	
 	// 文件上传
 	@handler FileUpload
