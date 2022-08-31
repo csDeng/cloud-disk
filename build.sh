@@ -8,7 +8,7 @@ if [ ! -f "${CUR}/config/app.ini" ];then
 	echo 'please create app.ini fie '
 	sleep 2
 	exit -1
-else576767
+else
 	echo "app.ini is existed"
 fi
 
@@ -42,10 +42,14 @@ echo 'build success'
 
 cd '../'
 
+read -p "please input a tag:\r\n" tag
+
+image="dengchongsen/cloud_disk:${tag}"
+
 echo 'docker start---'
-docker build . -t 'dengchongsen/cloud_disk'
+docker build . -t $image
 
 echo 'docker push---'
-docker push dengchongsen/cloud_disk
+docker push $image
 echo 'push success'
 sleep 30

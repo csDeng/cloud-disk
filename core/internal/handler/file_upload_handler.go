@@ -10,6 +10,7 @@ import (
 	"core/core/internal/logic"
 	"core/core/internal/svc"
 	"core/core/internal/types"
+	"core/core/response"
 	"core/models"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
@@ -19,7 +20,7 @@ func FileUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.FileUploadRequest
 		if err := httpx.Parse(r, &req); err != nil {
-			httpx.Error(w, err)
+			response.Response(w, nil, err)
 			return
 		}
 		file, fileHeader, err := r.FormFile("file")
@@ -42,13 +43,13 @@ func FileUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 		if has {
-			httpx.OkJson(w, &types.FileUploadResponse{
+			response.Response(w, &types.FileUploadResponse{
 				Identity: rp.Identity,
 				Name:     rp.Name,
 				Ext:      rp.Ext,
 				Size:     int64(rp.Size),
 				Path:     rp.Path,
-			})
+			}, err)
 			return
 		}
 
@@ -67,9 +68,9 @@ func FileUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := logic.NewFileUploadLogic(r.Context(), svcCtx)
 		resp, err := l.FileUpload(&req)
 		if err != nil {
-			httpx.Error(w, err)
+			response.Response(w, nil, err)
 		} else {
-			httpx.OkJson(w, resp)
+			response.Response(w, resp, err)
 		}
 	}
 }

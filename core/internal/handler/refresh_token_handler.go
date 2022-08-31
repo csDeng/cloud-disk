@@ -5,8 +5,7 @@ import (
 
 	"core/core/internal/logic"
 	"core/core/internal/svc"
-
-	"github.com/zeromicro/go-zero/rest/httpx"
+	"core/core/response"
 )
 
 func RefreshTokenHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
@@ -14,9 +13,9 @@ func RefreshTokenHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		l := logic.NewRefreshTokenLogic(r.Context(), svcCtx)
 		resp, err := l.RefreshToken(r.Header.Get("Authorization"))
 		if err != nil {
-			httpx.Error(w, err)
+			response.Response(w, nil, err)
 		} else {
-			httpx.OkJson(w, resp)
+			response.Response(w, resp, err)
 		}
 	}
 }
