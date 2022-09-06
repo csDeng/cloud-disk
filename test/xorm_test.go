@@ -60,6 +60,7 @@ func TestInsert(t *testing.T) {
 		Email:    "99@99.com",
 	})
 	if err != nil {
+
 		t.Fatal(err)
 	}
 	res := new(models.UserBasic)

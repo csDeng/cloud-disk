@@ -24,20 +24,20 @@ services:
     environment:
       - PMA_HOST=mysql
       - PMA_PORT=3306
-      # - PMA_ARBITRARY=1 允许登录任何ip
+      - PMA_ARBITRARY=1 允许登录任何ip
     ports:
       - "8888:80"
     depends_on:
       - mysql
   
   # 使用 nginx 解决 phpmyadmin 的跨域问题 
-  nginx:
-    container_name: "nginx"
-    links:
-      - phpmyadmin
-    build: ./nginx
-    ports:
-      - "8889:80"
-    restart: always
-    depends_on:
-      - phpmyadmin
+  # nginx:
+  #   container_name: "nginx"
+  #   links:
+  #     - phpmyadmin
+  #   build: ./nginx
+  #   ports:
+  #     - "8889:80"
+  #   restart: always
+  #   depends_on:
+  #     - phpmyadmin
