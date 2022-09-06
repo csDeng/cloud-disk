@@ -5,6 +5,7 @@ type EmailConfig struct {
 	Port       int    `ini:"port"`
 	From       string `ini:"from"`
 	Password   string `ini:"password"`
+	Second     int    `ini:"second"`
 }
 
 type RedisConfig struct {

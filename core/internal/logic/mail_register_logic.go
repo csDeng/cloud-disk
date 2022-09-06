@@ -61,7 +61,7 @@ func (l *MailRegisterLogic) MailRegister(req *types.MailRegisterRequest) (resp *
 	if err != nil {
 		return nil, err
 	}
-	_, err = rds.Set(l.ctx, key, code, 300*time.Second).Result()
+	_, err = rds.Set(l.ctx, key, code, time.Duration(helper.EmailConfigObject.Second)*time.Second).Result()
 	if err != nil {
 		return nil, err
 	}
