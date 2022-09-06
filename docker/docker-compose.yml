@@ -5,6 +5,8 @@ services:
     container_name: "redis5.0"
     build: ./redis
     restart: always
+    volumes:
+      - cloud_redis:/data/redis
     ports:
       - "6380:6379"
 
@@ -12,6 +14,8 @@ services:
     container_name: "mysql"
     build: ./mysql
     restart: always
+    volumes:
+      - cloud_db:/var/lib/mysql
     ports:
       - "3307:3306"
 
@@ -41,3 +45,7 @@ services:
   #   restart: always
   #   depends_on:
   #     - phpmyadmin
+
+volumes:
+  cloud_db: {}
+  cloud_redis: {}
