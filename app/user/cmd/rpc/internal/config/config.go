@@ -5,6 +5,7 @@ import (
 )
 
 type Config struct {
+	Mode string
 	zrpc.RpcServerConf
 
 	EmailRpcConf zrpc.RpcClientConf

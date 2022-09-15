@@ -1,0 +1,37 @@
+Name: user.rpc
+ListenOn: 0.0.0.0:8001
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: user.rpc
+
+EmailRpcConf:
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2380
+    Key: email.rpc
+
+Mysql:
+  Server: 
+  Port: 
+  Db: 
+  User: 
+  Password: 
+
+RedisConf:
+  Server: 
+  Port: 
+  Prefix: 'cloud_disk:'
+
+TokenConf:
+# 单位是分钟
+  Token_time: 5
+  Refresh_token_time: 60 
+  Secret: cloud-disk
+
+AesConf:
+  Secret: hello
+  Iv: world
+
+RandCodeLength: 6
+RandCodeExpire: 300

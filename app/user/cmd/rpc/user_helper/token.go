@@ -1,9 +1,11 @@
-package helper
+package user_helper
 
 import (
+	"core/app/common/helper"
 	"core/app/common/vars"
 	"core/core/define"
 	"errors"
+	"log"
 	"time"
 
 	jwtpkg "github.com/golang-jwt/jwt"
@@ -12,12 +14,14 @@ import (
 var TokenConfigObject = getTokenCfg()
 var tokenCfg *vars.TokenConfig
 
-func InjectTokenCfg(in *vars.TokenConfig) {
+func InitTokenCfg(in *vars.TokenConfig) {
 	tokenCfg = in
 }
 
 func getTokenCfg() *vars.TokenConfig {
-
+	if tokenCfg == nil {
+		log.Fatal("please inject tokenCfg first")
+	}
 	return tokenCfg
 }
 
@@ -34,7 +38,7 @@ func GenerateToken(id int, identity string, name string, isRefreshToken bool) (s
 		Id:             id,
 		Identity:       identity,
 		Name:           name,
-		RefreshTokenId: GenerateUuid(),
+		RefreshTokenId: helper.GenerateUuid(),
 		StandardClaims: jwtpkg.StandardClaims{
 			ExpiresAt: ex,
 		},
@@ -49,7 +53,6 @@ func GenerateToken(id int, identity string, name string, isRefreshToken bool) (s
 	if err != nil {
 		return "", err
 	}
-
 	res, err := AesEncrypt(tt)
 	if err != nil {
 		return "", err

@@ -6,6 +6,7 @@ import (
 	"core/app/common/helper"
 	"core/app/user/cmd/rpc/internal/svc"
 	"core/app/user/cmd/rpc/pb"
+	"core/app/user/cmd/rpc/user_helper"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -32,17 +33,19 @@ func (l *LoginLogic) Login(in *pb.LoginRequest) (*pb.LoginResponse, error) {
 	}
 
 	// 2. 生成 refresh_token
-	refresh_token, err := helper.GenerateToken(user.Id, user.Identity, user.Name, true)
+
+	refresh_token, err := user_helper.GenerateToken(user.Id, user.Identity, user.Name, true)
 	if err != nil {
 		return nil, err
 	}
 	// 3. 生成token
-	token, err := helper.GenerateToken(user.Id, user.Identity, user.Name, false)
+	token, err := user_helper.GenerateToken(user.Id, user.Identity, user.Name, false)
 	if err != nil {
 		return nil, err
 	}
 	return &pb.LoginResponse{
 		Token:        token,
 		RefreshToken: refresh_token,
+		Identity:     user.Identity,
 	}, nil
 }

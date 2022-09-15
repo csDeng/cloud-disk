@@ -1,0 +1,13 @@
+Name: email.rpc
+ListenOn: 0.0.0.0:8003
+Etcd:
+  Hosts:
+  - 127.0.0.1:2380
+  Key: email.rpc
+
+EmailConfig:
+  Server: smtp.163.com
+  Port: 465
+  From: 
+  Password: 
+  Second: 60

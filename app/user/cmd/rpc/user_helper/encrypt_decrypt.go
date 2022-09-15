@@ -1,10 +1,11 @@
-package helper
+package user_helper
 
 import (
 	"core/app/common/vars"
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/md5"
+	"log"
 
 	"encoding/base64"
 	"errors"
@@ -13,11 +14,13 @@ import (
 var AesCfgObj = getAesCfg()
 var aesc *vars.AesCfg
 
-func InjectAesCfg(in *vars.AesCfg) {
+func InitAesCfg(in *vars.AesCfg) {
 	aesc = in
 }
-
 func getAesCfg() *vars.AesCfg {
+	if aesc == nil {
+		log.Fatalln("please inject aesCfg first")
+	}
 	return aesc
 
 }

@@ -2,13 +2,11 @@ package svc
 
 import (
 	"core/app/common/db"
-	"core/app/common/helper"
 	"core/app/common/rds"
 	"core/app/common/vars"
 	"core/app/email/cmd/rpc/emailcenter"
 	"core/app/user/cmd/rpc/internal/config"
 	"core/app/user/model"
-	"log"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/zeromicro/go-zero/zrpc"
@@ -61,23 +59,6 @@ type ServiceContext struct {
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
-	// 配置注入
-	aesConf := &vars.AesCfg{
-		Secret: c.AesConf.Secret,
-		IV:     c.AesConf.Iv,
-	}
-
-	tokenConf := &vars.TokenConfig{
-		TokenTime:        c.TokenConf.Token_time,
-		RefreshTokenTime: c.TokenConf.Refresh_token_time,
-		Secret:           c.TokenConf.Secret,
-	}
-
-	helper.InjectAesCfg(aesConf)
-	helper.InjectTokenCfg(tokenConf)
-
-	log.Println("注入配置")
-
 	return &ServiceContext{
 		Config:         c,
 		EmailRpcClient: emailcenter.NewEmailCenter(zrpc.MustNewClient(c.EmailRpcConf)),

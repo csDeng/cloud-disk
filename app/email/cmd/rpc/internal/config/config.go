@@ -13,4 +13,6 @@ type EmailConfigType struct {
 type Config struct {
 	zrpc.RpcServerConf
 	EmailConfig EmailConfigType
+
+	Mode string
 }

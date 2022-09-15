@@ -28,8 +28,6 @@ func main() {
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
 		pb.RegisterEmailCenterServer(grpcServer, svr)
-		// grpcui  调试使用
-		reflection.Register(grpcServer)
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)
 		}
