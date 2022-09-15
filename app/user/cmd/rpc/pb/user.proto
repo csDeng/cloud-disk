@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+package pb;
+
+
+message LoginRequest {
+	string name = 1;
+	string password = 2;
+}
+
+message LoginResponse {
+	string token = 1;
+	string refreshToken = 2;
+}
+
+message UserRegisterRequest {
+	string code = 1;    
+	string email = 2;    
+	string name = 3;     
+	string password = 4; 
+}
+
+message UserRegisterResponse {
+	string identity = 1; 
+	string name = 2;     
+	string email = 3;  
+}
+
+message EmailVerificationRequest {
+	string email = 1;
+} 
+message EmailVerificationResponse {
+
+}
+
+service UserCenter {
+	rpc Login(LoginRequest) returns (LoginResponse);
+
+	rpc Register(UserRegisterRequest) returns(UserRegisterResponse);
+
+	rpc EmailVerification(EmailVerificationRequest) returns(EmailVerificationResponse);
+}

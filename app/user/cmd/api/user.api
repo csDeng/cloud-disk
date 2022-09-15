@@ -1,0 +1,55 @@
+service usercenter {
+	// 用户登录
+	@handler UserLogin
+	post /user/login(LoginRequest) returns (LoginResponse)
+	
+	// 用户详情
+	@handler UserDetail
+	get /user/detail(UserDetailRequest) returns (UserDetailResponse)
+	
+	// 邮箱注册
+	@handler MailRegister
+	post /mail/register(MailRegisterRequest) returns (MailRegisterResponse)
+	
+	// 用户注册
+	@handler UserRegister
+	post /user/register(UserRegisterRequest) returns (UserRegisterResponse)
+}
+
+type UserRegisterRequest {
+	Code     string `json:"code"`
+	Email    string `json:"email"`
+	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
+type UserRegisterResponse {
+	Identity string `json:"identity"`
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+}
+
+type MailRegisterRequest {
+	Email string `json:"email"`
+}
+
+type MailRegisterResponse {
+}
+
+type UserDetailRequest {
+	Identity string `json:"identity"`
+}
+type UserDetailResponse {
+	Name  string `json:"name"`
+	Email string `json:"email"`
+}
+
+type LoginRequest {
+	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
+type LoginResponse {
+	Token        string `json:"token"`
+	RefreshToken string `json:"refresh_token"`
+}

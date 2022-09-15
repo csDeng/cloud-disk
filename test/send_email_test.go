@@ -14,6 +14,7 @@ func TestSendEmail(t *testing.T) {
 	emailConfig := helper.EmailConfigObject
 	e := email.NewEmail()
 	e.From = fmt.Sprintf("<%s>", emailConfig.From)
+
 	e.To = []string{"553537528@qq.com"}
 	// 秘密抄送
 	// e.Bcc = []string{"test_bcc@example.com"}
