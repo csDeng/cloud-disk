@@ -11,18 +11,20 @@ import (
 	"errors"
 )
 
-var AesCfgObj = getAesCfg()
 var aesc *vars.AesCfg
+var hasInjectAesCfg = false
 
 func InitAesCfg(in *vars.AesCfg) {
 	aesc = in
+	hasInjectAesCfg = true
 }
 func getAesCfg() *vars.AesCfg {
-	if aesc == nil {
-		log.Fatalln("please inject aesCfg first")
+	if !hasInjectAesCfg {
+		return nil
+	} else if aesc == nil {
+		log.Fatal("AesCfgObj nil")
 	}
 	return aesc
-
 }
 
 func getByte(s string) []byte {
@@ -34,6 +36,7 @@ var secret []byte
 var iv []byte
 
 func getAesSecret() []byte {
+	var AesCfgObj = getAesCfg()
 	if secret == nil {
 		secret = getByte(AesCfgObj.Secret)
 	}
@@ -41,6 +44,7 @@ func getAesSecret() []byte {
 }
 
 func getAesIV() []byte {
+	var AesCfgObj = getAesCfg()
 	if iv == nil {
 		iv = getByte(AesCfgObj.IV)
 	}

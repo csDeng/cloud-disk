@@ -11,15 +11,18 @@ import (
 	jwtpkg "github.com/golang-jwt/jwt"
 )
 
-var TokenConfigObject = getTokenCfg()
 var tokenCfg *vars.TokenConfig
+var hasInjectToken = false
 
 func InitTokenCfg(in *vars.TokenConfig) {
 	tokenCfg = in
+	hasInjectToken = true
 }
 
 func getTokenCfg() *vars.TokenConfig {
-	if tokenCfg == nil {
+	if !hasInjectToken {
+		return nil
+	} else if tokenCfg == nil {
 		log.Fatal("please inject tokenCfg first")
 	}
 	return tokenCfg
@@ -27,6 +30,7 @@ func getTokenCfg() *vars.TokenConfig {
 
 // 生成token
 func GenerateToken(id int, identity string, name string, isRefreshToken bool) (string, error) {
+	TokenConfigObject := getTokenCfg()
 	t := 0
 	if isRefreshToken {
 		t = TokenConfigObject.RefreshTokenTime
@@ -62,6 +66,7 @@ func GenerateToken(id int, identity string, name string, isRefreshToken bool) (s
 
 // 解析token
 func ParseToken(token string) (*define.UserClaim, error) {
+	TokenConfigObject := getTokenCfg()
 	plain, err := AesDecrypt(token)
 	if err != nil {
 		return nil, err
