@@ -2,10 +2,10 @@ package test
 
 import (
 	"context"
-	"core/core/helper"
+	"core/app/common/vars"
 	"fmt"
+	"log"
 	"testing"
-	"time"
 
 	"github.com/go-redis/redis/v8"
 )
@@ -13,53 +13,44 @@ import (
 var ctx = context.Background()
 
 func TestRedis(t *testing.T) {
-	config := helper.RedisConfigObject
+	config := vars.RedisConfig{
+		Server:      "",
+		Port:        6380,
+		RedisPrefix: "test",
+		Password:    "",
+	}
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     fmt.Sprintf("%s:%d", config.Server, config.Port),
-		Password: "", // no password set
-		DB:       0,  // use default DB
+		Password: config.Password, // no password set
+		DB:       0,               // use default DB
 	})
-	// v, err := rdb.Exists(ctx, "key").Result()
-
-	// // v, err := rdb.Do(ctx, "TTL", "key").Result()
-	// if err != nil {
-	// 	t.Fatal(err)
-	// }
-	// t.Logf("%T, %v", v, v)
-
-	err := rdb.Set(ctx, "key", "value", time.Second*30).Err()
+	err := rdb.Set(ctx, "key", "value", 0).Err()
 	if err != nil {
 		panic(err)
 	}
-
-	// val, err := rdb.Get(ctx, "cloud_disk:refresh_token:1eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6NiwiSWRlbnRpdHkiOiJjMjc4ZWRjNi0wYjJkLTQ3NzMtOWQ0Yy0xMzIzZDFhMjZjMjQiLCJOYW1lIjoibXluYW1lIiwiUmVmcmVzaFRva2VuSWQiOiI4OTQ5YjYxNS00N2UwLTRjM2QtYWY0My0zMjQyZWYzYzFlNzMiLCJleHAiOjE2NjAxNDE1OTl9.0WDuIORD_0qxwxhwLRxNhtoMaXfLmJyLtmlldnVDdMw").Result()
-	// if err != nil && err != redis.Nil {
-	// 	t.Log(err)
-	// }
-	// fmt.Println("key", val)
-	// v, err := strconv.Atoi(val)
+	script := `
+	-- old token key , new token key, Expire
+	local Expire = tonumber(ARGV[3])
+	if(not KEYS[3]) then
+		return false
+	elseif Expire == nil then
+		return false	
+	end
+	redis.call("SET",KEYS[1],ARGV[1],"EX",ARGV[3])
+	redis.call("SET",KEYS[2],ARGV[2],"EX",ARGV[3])
+	return true
+	`
+	// res, err := rdb.Eval(ctx, script, []string{"key1", "key2", "k"}, "ag1", "arg2", 1000).Result()
 	// if err != nil {
-	// 	t.Fail()
+	// 	log.Fatal(err)
 	// }
+	// log.Printf("Eval T=%T v=%v", res, res)
 
-	t.Log(err)
-	// t.Log(v == 1)
+	v, err := rdb.ScriptLoad(ctx, script).Result()
+	fmt.Printf("%+v %+v", v, err)
 
-	// val, err := rdb.Do(ctx, "EXISTS", "cloud_disk:1refresh_token:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6NiwiSWRlbnRpdHkiOiJjMjc4ZWRjNi0wYjJkLTQ3NzMtOWQ0Yy0xMzIzZDFhMjZjMjQiLCJOYW1lIjoibXluYW1lIiwiUmVmcmVzaFRva2VuSWQiOiI4OTQ5YjYxNS00N2UwLTRjM2QtYWY0My0zMjQyZWYzYzFlNzMiLCJleHAiOjE2NjAxNDE1OTl9.0WDuIORD_0qxwxhwLRxNhtoMaXfLmJyLtmlldnVDdMw").Result()
-	// if err != nil {
-	// 	t.Fatal(err)
-	// }
-	// fmt.Printf("%T %v", val, val)
-	// t.Log(val == int64(1))
-
-	// val2, err := rdb.Get(ctx, "key2").Result()
-	// if err == redis.Nil {
-	// 	fmt.Println("key2 does not exist")
-	// } else if err != nil {
-	// 	panic(err)
-	// } else {
-	// 	fmt.Println("key2", val2)
-	// }
-	// Output: key value
-	// key2 does not exist
+	err = rdb.EvalSha(ctx, "ce44b37a62034ec65136828fb551bcbc890a58b2", []string{"k1", "k2", "k3"}, 1, 2).Err()
+	if err != nil {
+		log.Fatal(err)
+	}
 }

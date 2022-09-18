@@ -1,12 +1,12 @@
 package test
 
-import (
-	"core/core/helper"
-	"fmt"
-	"testing"
-)
+// import (
+// 	"core/core/helper"
+// 	"fmt"
+// 	"testing"
+// )
 
-func TestRandCode(t *testing.T) {
-	code := helper.RandCode()
-	fmt.Println(code)
-}
+// func TestRandCode(t *testing.T) {
+// 	code := helper.RandCode()
+// 	fmt.Println(code)
+// }

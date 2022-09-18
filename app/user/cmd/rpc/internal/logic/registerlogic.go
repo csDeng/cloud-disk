@@ -34,7 +34,7 @@ func (l *RegisterLogic) Register(in *pb.UserRegisterRequest) (*pb.UserRegisterRe
 		return nil, err
 	}
 	if b {
-		return nil, vars.EmailIsExistedErr
+		return nil, vars.ErrEmailIsExisted
 	}
 	rds := l.svcCtx.RdsCli
 	prefix := l.svcCtx.Config.RedisConf.Prefix
@@ -42,7 +42,9 @@ func (l *RegisterLogic) Register(in *pb.UserRegisterRequest) (*pb.UserRegisterRe
 
 	v, err := rds.Get(l.ctx, key).Result()
 	if err != nil {
-		return nil, errors.New("当前邮箱没有获取验证码")
+		return nil, err
+	} else if err == vars.ErrKeyIsNotExisted {
+		return nil, vars.ErrEmailNotGetCode
 	}
 	if v != in.Code {
 		return nil, errors.New("验证码错误")
@@ -60,7 +62,7 @@ func (l *RegisterLogic) Register(in *pb.UserRegisterRequest) (*pb.UserRegisterRe
 		return nil, err
 	}
 	if !b {
-		return nil, vars.AddErr
+		return nil, vars.ErrAdd
 	}
 
 	user, err := userModel.GetUserByIdentity(Engine, identity)

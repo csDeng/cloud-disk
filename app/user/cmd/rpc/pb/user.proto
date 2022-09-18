@@ -36,10 +36,21 @@ message EmailVerificationResponse {
 
 }
 
+message RefreshTokenRequest {
+	string token = 1; 
+}
+
+message RefreshTokenResponse {
+	string token = 1;
+	string refresh_token = 2;
+}
+
 service UserCenter {
 	rpc Login(LoginRequest) returns (LoginResponse);
 
 	rpc Register(UserRegisterRequest) returns(UserRegisterResponse);
 
 	rpc EmailVerification(EmailVerificationRequest) returns(EmailVerificationResponse);
+
+	rpc RefreshToken(RefreshTokenRequest) returns(RefreshTokenResponse);
 }

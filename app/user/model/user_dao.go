@@ -64,7 +64,7 @@ func (m *UserBasic) Login(Engine *xorm.Engine, name, password string) (*UserBasi
 		return nil, err
 	}
 	if !has {
-		return nil, vars.LoginErr
+		return nil, vars.ErrLogin
 	}
 	return user, nil
 }

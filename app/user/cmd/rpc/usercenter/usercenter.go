@@ -17,6 +17,8 @@ type (
 	EmailVerificationResponse = pb.EmailVerificationResponse
 	LoginRequest              = pb.LoginRequest
 	LoginResponse             = pb.LoginResponse
+	RefreshTokenRequest       = pb.RefreshTokenRequest
+	RefreshTokenResponse      = pb.RefreshTokenResponse
 	UserRegisterRequest       = pb.UserRegisterRequest
 	UserRegisterResponse      = pb.UserRegisterResponse
 
@@ -24,6 +26,7 @@ type (
 		Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 		Register(ctx context.Context, in *UserRegisterRequest, opts ...grpc.CallOption) (*UserRegisterResponse, error)
 		EmailVerification(ctx context.Context, in *EmailVerificationRequest, opts ...grpc.CallOption) (*EmailVerificationResponse, error)
+		RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error)
 	}
 
 	defaultUserCenter struct {
@@ -50,4 +53,9 @@ func (m *defaultUserCenter) Register(ctx context.Context, in *UserRegisterReques
 func (m *defaultUserCenter) EmailVerification(ctx context.Context, in *EmailVerificationRequest, opts ...grpc.CallOption) (*EmailVerificationResponse, error) {
 	client := pb.NewUserCenterClient(m.cli.Conn())
 	return client.EmailVerification(ctx, in, opts...)
+}
+
+func (m *defaultUserCenter) RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error) {
+	client := pb.NewUserCenterClient(m.cli.Conn())
+	return client.RefreshToken(ctx, in, opts...)
 }

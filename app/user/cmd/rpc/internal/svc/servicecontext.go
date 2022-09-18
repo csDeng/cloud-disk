@@ -37,6 +37,7 @@ func getRdsCli(c *config.Config) *redis.Client {
 			Server:      c.RedisConf.Server,
 			Port:        c.RedisConf.Port,
 			RedisPrefix: c.RedisConf.Prefix,
+			Password:    c.RedisConf.Password,
 		}
 		rdscli = rds.GetRdsClient(&RedisConfigObject)
 	}

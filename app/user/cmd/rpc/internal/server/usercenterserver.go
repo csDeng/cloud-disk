@@ -36,3 +36,8 @@ func (s *UserCenterServer) EmailVerification(ctx context.Context, in *pb.EmailVe
 	l := logic.NewEmailVerificationLogic(ctx, s.svcCtx)
 	return l.EmailVerification(in)
 }
+
+func (s *UserCenterServer) RefreshToken(ctx context.Context, in *pb.RefreshTokenRequest) (*pb.RefreshTokenResponse, error) {
+	l := logic.NewRefreshTokenLogic(ctx, s.svcCtx)
+	return l.RefreshToken(in)
+}

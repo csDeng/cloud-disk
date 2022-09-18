@@ -3,31 +3,32 @@ package vars
 import jwtpkg "github.com/golang-jwt/jwt"
 
 type EmailConfig struct {
-	ServerName string `ini:"server"`
-	Port       int    `ini:"port"`
-	From       string `ini:"from"`
-	Password   string `ini:"password"`
-	Second     int    `ini:"second"`
+	ServerName string
+	Port       int
+	From       string
+	Password   string
+	Second     int
 }
 
 type RedisConfig struct {
-	Server      string `ini:"server"`
-	Port        int    `ini:"port"`
-	RedisPrefix string `ini:"prefix"`
+	Server      string
+	Port        int
+	RedisPrefix string
+	Password    string
 }
 
 type MysqlConfig struct {
-	Server   string `ini:"server"`
-	Port     int    `ini:"port"`
-	User     string `ini:"user"`
-	Password string `ini:"password"`
-	DB       string `ini:"db"`
+	Server   string
+	Port     int
+	User     string
+	Password string
+	DB       string
 }
 
 type CosConfig struct {
-	Server    string `ini:"server"`
-	SecretID  string `ini:"secret_id"`
-	SecretKey string `ini:"secret_key"`
+	Server    string
+	SecretID  string
+	SecretKey string
 }
 
 // 验证码长度
@@ -49,9 +50,9 @@ type UserClaim struct {
 }
 
 type TokenConfig struct {
-	TokenTime        int    `ini:"token_time"`
-	RefreshTokenTime int    `ini:"refresh_token_time"`
-	Secret           string `ini:"secret"`
+	TokenTime        int
+	RefreshTokenTime int
+	Secret           string
 }
 
 type AesCfg struct {

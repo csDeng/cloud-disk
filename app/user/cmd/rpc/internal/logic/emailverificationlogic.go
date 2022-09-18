@@ -35,7 +35,7 @@ func (l *EmailVerificationLogic) EmailVerification(in *pb.EmailVerificationReque
 	}
 	// 邮箱已存在
 	if b {
-		return nil, vars.EmailIsExistedErr
+		return nil, vars.ErrEmailIsExisted
 	}
 
 	rds := l.svcCtx.RdsCli
@@ -62,13 +62,13 @@ func (l *EmailVerificationLogic) EmailVerification(in *pb.EmailVerificationReque
 		Code:  code,
 	})
 	if err != nil {
-		return nil, err
+		return nil, vars.ErrEmailSend
 	}
 
 	err = rds.Set(l.ctx, key, code, time.Duration((l.svcCtx.Config.RandCodeExpire))*time.Second).Err()
 
 	if err != nil {
-		return nil, err
+		return nil, vars.ErrRegCode
 	}
 
 	return &pb.EmailVerificationResponse{}, nil

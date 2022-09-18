@@ -19,9 +19,10 @@ type Config struct {
 	}
 
 	RedisConf struct {
-		Server string
-		Port   int
-		Prefix string
+		Server   string
+		Password string
+		Port     int
+		Prefix   string
 	}
 
 	RandCodeLength int
