@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"core/app/user/cmd/rpc/internal/logic"
-	"core/app/user/cmd/rpc/internal/svc"
-	"core/app/user/cmd/rpc/pb"
+	"cloud_disk/app/user/cmd/rpc/internal/logic"
+	"cloud_disk/app/user/cmd/rpc/internal/svc"
+	"cloud_disk/app/user/cmd/rpc/pb"
 )
 
 type UserCenterServer struct {
@@ -40,4 +40,9 @@ func (s *UserCenterServer) EmailVerification(ctx context.Context, in *pb.EmailVe
 func (s *UserCenterServer) RefreshToken(ctx context.Context, in *pb.RefreshTokenRequest) (*pb.RefreshTokenResponse, error) {
 	l := logic.NewRefreshTokenLogic(ctx, s.svcCtx)
 	return l.RefreshToken(in)
+}
+
+func (s *UserCenterServer) GetIdentityWithToken(ctx context.Context, in *pb.GetIdentityWithTokenRequest) (*pb.GetIdentityWithTokenResponse, error) {
+	l := logic.NewGetIdentityWithTokenLogic(ctx, s.svcCtx)
+	return l.GetIdentityWithToken(in)
 }

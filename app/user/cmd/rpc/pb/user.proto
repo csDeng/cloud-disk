@@ -45,6 +45,14 @@ message RefreshTokenResponse {
 	string refresh_token = 2;
 }
 
+message GetIdentityWithTokenRequest {
+	string token = 1;
+}
+
+message GetIdentityWithTokenResponse {
+	string identity = 1;
+}
+
 service UserCenter {
 	rpc Login(LoginRequest) returns (LoginResponse);
 
@@ -53,4 +61,6 @@ service UserCenter {
 	rpc EmailVerification(EmailVerificationRequest) returns(EmailVerificationResponse);
 
 	rpc RefreshToken(RefreshTokenRequest) returns(RefreshTokenResponse);
+
+	rpc GetIdentityWithToken(GetIdentityWithTokenRequest) returns(GetIdentityWithTokenResponse);
 }

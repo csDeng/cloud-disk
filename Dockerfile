@@ -4,7 +4,7 @@ RUN mkdir /app
 
 WORKDIR /app
 
-COPY ./core/core.exe .
+COPY ./cloud_disk/app.exe .
 
 # 下面两个文件，按道理来说是不用 cp 的，但是不 cp 会报错，暂时不知道原因
 

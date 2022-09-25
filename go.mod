@@ -1,9 +1,8 @@
-module core
+module cloud_disk
 
 go 1.18
 
 require (
-	github.com/go-ini/ini v1.66.6
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible

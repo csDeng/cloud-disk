@@ -1,7 +1,7 @@
 package test
 
 // import (
-// 	"core/core/helper"
+// 	"cloud_disk/app/helper"
 // 	"crypto/tls"
 // 	"fmt"
 // 	"net/smtp"

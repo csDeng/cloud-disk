@@ -7,8 +7,8 @@ import (
 	"log"
 	"net/smtp"
 
-	"core/app/email/cmd/rpc/internal/svc"
-	"core/app/email/cmd/rpc/pb"
+	"cloud_disk/app/email/cmd/rpc/internal/svc"
+	"cloud_disk/app/email/cmd/rpc/pb"
 
 	"github.com/jordan-wright/email"
 	"github.com/zeromicro/go-zero/core/logx"

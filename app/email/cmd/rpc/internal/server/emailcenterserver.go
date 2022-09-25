@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"core/app/email/cmd/rpc/internal/logic"
-	"core/app/email/cmd/rpc/internal/svc"
-	"core/app/email/cmd/rpc/pb"
+	"cloud_disk/app/email/cmd/rpc/internal/logic"
+	"cloud_disk/app/email/cmd/rpc/internal/svc"
+	"cloud_disk/app/email/cmd/rpc/pb"
 )
 
 type EmailCenterServer struct {

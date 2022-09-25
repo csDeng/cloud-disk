@@ -3,9 +3,9 @@ package handler
 import (
 	"net/http"
 
-	"core/app/user/cmd/api/internal/logic"
-	"core/app/user/cmd/api/internal/svc"
-	"core/app/user/cmd/api/internal/types"
+	"cloud_disk/user/cmd/api/internal/logic"
+	"cloud_disk/user/cmd/api/internal/svc"
+	"cloud_disk/user/cmd/api/internal/types"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )

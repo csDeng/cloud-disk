@@ -1,10 +1,8 @@
 package user_helper
 
 import (
-	"core/app/common/helper"
-	"core/app/common/vars"
-	"core/core/define"
-	"errors"
+	"cloud_disk/app/common/helper"
+	"cloud_disk/app/common/vars"
 	"log"
 	"time"
 
@@ -38,7 +36,7 @@ func GenerateToken(id int, identity string, name string, isRefreshToken bool) (s
 		t = TokenConfigObject.TokenTime
 	}
 	ex := time.Now().Add(time.Minute * time.Duration(t)).Unix()
-	uc := define.UserClaim{
+	uc := vars.UserClaim{
 		Id:             id,
 		Identity:       identity,
 		Name:           name,
@@ -65,13 +63,13 @@ func GenerateToken(id int, identity string, name string, isRefreshToken bool) (s
 }
 
 // 解析token
-func ParseToken(token string) (*define.UserClaim, error) {
+func ParseToken(token string) (*vars.UserClaim, error) {
 	TokenConfigObject := getTokenCfg()
 	plain, err := AesDecrypt(token)
 	if err != nil {
 		return nil, err
 	}
-	uc := new(define.UserClaim)
+	uc := new(vars.UserClaim)
 	claims, err := jwtpkg.ParseWithClaims(plain, uc, func(t *jwtpkg.Token) (interface{}, error) {
 		return []byte(TokenConfigObject.Secret), nil
 	})
@@ -79,7 +77,7 @@ func ParseToken(token string) (*define.UserClaim, error) {
 		return nil, err
 	}
 	if !claims.Valid {
-		return nil, errors.New("token is invalid")
+		return nil, vars.ErrTokenInvalid
 	}
 	return uc, nil
 }

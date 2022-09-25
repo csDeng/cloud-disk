@@ -1,7 +1,7 @@
 package user_helper
 
 import (
-	"core/app/common/vars"
+	"cloud_disk/app/common/vars"
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/md5"

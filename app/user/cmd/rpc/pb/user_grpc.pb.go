@@ -26,6 +26,7 @@ type UserCenterClient interface {
 	Register(ctx context.Context, in *UserRegisterRequest, opts ...grpc.CallOption) (*UserRegisterResponse, error)
 	EmailVerification(ctx context.Context, in *EmailVerificationRequest, opts ...grpc.CallOption) (*EmailVerificationResponse, error)
 	RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error)
+	GetIdentityWithToken(ctx context.Context, in *GetIdentityWithTokenRequest, opts ...grpc.CallOption) (*GetIdentityWithTokenResponse, error)
 }
 
 type userCenterClient struct {
@@ -72,6 +73,15 @@ func (c *userCenterClient) RefreshToken(ctx context.Context, in *RefreshTokenReq
 	return out, nil
 }
 
+func (c *userCenterClient) GetIdentityWithToken(ctx context.Context, in *GetIdentityWithTokenRequest, opts ...grpc.CallOption) (*GetIdentityWithTokenResponse, error) {
+	out := new(GetIdentityWithTokenResponse)
+	err := c.cc.Invoke(ctx, "/pb.UserCenter/GetIdentityWithToken", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserCenterServer is the server API for UserCenter service.
 // All implementations must embed UnimplementedUserCenterServer
 // for forward compatibility
@@ -80,6 +90,7 @@ type UserCenterServer interface {
 	Register(context.Context, *UserRegisterRequest) (*UserRegisterResponse, error)
 	EmailVerification(context.Context, *EmailVerificationRequest) (*EmailVerificationResponse, error)
 	RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error)
+	GetIdentityWithToken(context.Context, *GetIdentityWithTokenRequest) (*GetIdentityWithTokenResponse, error)
 	mustEmbedUnimplementedUserCenterServer()
 }
 
@@ -98,6 +109,9 @@ func (UnimplementedUserCenterServer) EmailVerification(context.Context, *EmailVe
 }
 func (UnimplementedUserCenterServer) RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
+}
+func (UnimplementedUserCenterServer) GetIdentityWithToken(context.Context, *GetIdentityWithTokenRequest) (*GetIdentityWithTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetIdentityWithToken not implemented")
 }
 func (UnimplementedUserCenterServer) mustEmbedUnimplementedUserCenterServer() {}
 
@@ -184,6 +198,24 @@ func _UserCenter_RefreshToken_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserCenter_GetIdentityWithToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetIdentityWithTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserCenterServer).GetIdentityWithToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.UserCenter/GetIdentityWithToken",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserCenterServer).GetIdentityWithToken(ctx, req.(*GetIdentityWithTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserCenter_ServiceDesc is the grpc.ServiceDesc for UserCenter service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -206,6 +238,10 @@ var UserCenter_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RefreshToken",
 			Handler:    _UserCenter_RefreshToken_Handler,
+		},
+		{
+			MethodName: "GetIdentityWithToken",
+			Handler:    _UserCenter_GetIdentityWithToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

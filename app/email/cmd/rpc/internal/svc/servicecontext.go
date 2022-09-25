@@ -1,8 +1,8 @@
 package svc
 
 import (
-	"core/app/common/vars"
-	"core/app/email/cmd/rpc/internal/config"
+	"cloud_disk/app/common/vars"
+	"cloud_disk/app/email/cmd/rpc/internal/config"
 	"fmt"
 )
 

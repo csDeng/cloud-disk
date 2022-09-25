@@ -1,8 +1,8 @@
 package test
 
 // import (
-// 	"core/core/define"
-// 	"core/core/helper"
+// 	"cloud_disk/app/define"
+// 	"cloud_disk/app/helper"
 // 	"fmt"
 // 	"testing"
 // )

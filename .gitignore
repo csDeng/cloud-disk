@@ -4,3 +4,4 @@ app.ini
 
 *.yml
 *.yaml
+**/pool

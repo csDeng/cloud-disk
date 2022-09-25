@@ -1,8 +1,8 @@
 package test
 
 import (
+	"cloud_disk/common/vars"
 	"context"
-	"core/app/common/vars"
 	"fmt"
 	"log"
 	"testing"

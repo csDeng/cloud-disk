@@ -3,8 +3,8 @@ package logic
 import (
 	"context"
 
-	"core/app/user/cmd/api/internal/svc"
-	"core/app/user/cmd/api/internal/types"
+	"cloud_disk/user/cmd/api/internal/svc"
+	"cloud_disk/user/cmd/api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

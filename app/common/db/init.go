@@ -1,7 +1,7 @@
 package db
 
 import (
-	"core/app/common/vars"
+	"cloud_disk/app/common/vars"
 	"fmt"
 	"log"
 

@@ -14,42 +14,58 @@ service usercenter {
 	// 用户注册
 	@handler UserRegister
 	post /user/register(UserRegisterRequest) returns (UserRegisterResponse)
+	
+	// 令牌刷新
+	@handler RefreshToken
+	put /refresh returns(RefreshTokenResponse)
 }
 
-type UserRegisterRequest {
-	Code     string `json:"code"`
-	Email    string `json:"email"`
-	Name     string `json:"name"`
-	Password string `json:"password"`
-}
+type (
+	UserRegisterRequest {
+		Code     string `json:"code"`
+		Email    string `json:"email"`
+		Name     string `json:"name"`
+		Password string `json:"password"`
+	}
+	UserRegisterResponse {
+		Identity string `json:"identity"`
+		Name     string `json:"name"`
+		Email    string `json:"email"`
+	}
+)
 
-type UserRegisterResponse {
-	Identity string `json:"identity"`
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-}
+type (
+	MailRegisterRequest {
+		Email string `json:"email"`
+	}
+	MailRegisterResponse {
+	}
+) 
 
-type MailRegisterRequest {
-	Email string `json:"email"`
-}
+type (
+	UserDetailRequest {
+		Identity string `json:"identity"`
+	}
+	UserDetailResponse {
+		Name  string `json:"name"`
+		Email string `json:"email"`
+	}
+)
 
-type MailRegisterResponse {
-}
+type (
+	LoginRequest {
+		Name     string `json:"name"`
+		Password string `json:"password"`
+	}
+	LoginResponse {
+		Token        string `json:"token"`
+		RefreshToken string `json:"refresh_token"`
+	}
+)
 
-type UserDetailRequest {
-	Identity string `json:"identity"`
-}
-type UserDetailResponse {
-	Name  string `json:"name"`
-	Email string `json:"email"`
-}
-
-type LoginRequest {
-	Name     string `json:"name"`
-	Password string `json:"password"`
-}
-
-type LoginResponse {
-	Token        string `json:"token"`
-	RefreshToken string `json:"refresh_token"`
-}
+type (
+	RefreshTokenResponse {
+		Token        string `json:"token"`
+		RefreshToken string `json:"refresh_token"`
+	}
+)

@@ -6,27 +6,30 @@ package usercenter
 import (
 	"context"
 
-	"core/app/user/cmd/rpc/pb"
+	"cloud_disk/app/user/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
 
 type (
-	EmailVerificationRequest  = pb.EmailVerificationRequest
-	EmailVerificationResponse = pb.EmailVerificationResponse
-	LoginRequest              = pb.LoginRequest
-	LoginResponse             = pb.LoginResponse
-	RefreshTokenRequest       = pb.RefreshTokenRequest
-	RefreshTokenResponse      = pb.RefreshTokenResponse
-	UserRegisterRequest       = pb.UserRegisterRequest
-	UserRegisterResponse      = pb.UserRegisterResponse
+	EmailVerificationRequest     = pb.EmailVerificationRequest
+	EmailVerificationResponse    = pb.EmailVerificationResponse
+	GetIdentityWithTokenRequest  = pb.GetIdentityWithTokenRequest
+	GetIdentityWithTokenResponse = pb.GetIdentityWithTokenResponse
+	LoginRequest                 = pb.LoginRequest
+	LoginResponse                = pb.LoginResponse
+	RefreshTokenRequest          = pb.RefreshTokenRequest
+	RefreshTokenResponse         = pb.RefreshTokenResponse
+	UserRegisterRequest          = pb.UserRegisterRequest
+	UserRegisterResponse         = pb.UserRegisterResponse
 
 	UserCenter interface {
 		Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 		Register(ctx context.Context, in *UserRegisterRequest, opts ...grpc.CallOption) (*UserRegisterResponse, error)
 		EmailVerification(ctx context.Context, in *EmailVerificationRequest, opts ...grpc.CallOption) (*EmailVerificationResponse, error)
 		RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error)
+		GetIdentityWithToken(ctx context.Context, in *GetIdentityWithTokenRequest, opts ...grpc.CallOption) (*GetIdentityWithTokenResponse, error)
 	}
 
 	defaultUserCenter struct {
@@ -58,4 +61,9 @@ func (m *defaultUserCenter) EmailVerification(ctx context.Context, in *EmailVeri
 func (m *defaultUserCenter) RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error) {
 	client := pb.NewUserCenterClient(m.cli.Conn())
 	return client.RefreshToken(ctx, in, opts...)
+}
+
+func (m *defaultUserCenter) GetIdentityWithToken(ctx context.Context, in *GetIdentityWithTokenRequest, opts ...grpc.CallOption) (*GetIdentityWithTokenResponse, error) {
+	client := pb.NewUserCenterClient(m.cli.Conn())
+	return client.GetIdentityWithToken(ctx, in, opts...)
 }

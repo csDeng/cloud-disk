@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 
-	"core/app/email/cmd/rpc/internal/config"
-	"core/app/email/cmd/rpc/internal/server"
-	"core/app/email/cmd/rpc/internal/svc"
-	"core/app/email/cmd/rpc/pb"
+	"cloud_disk/app/email/cmd/rpc/internal/config"
+	"cloud_disk/app/email/cmd/rpc/internal/server"
+	"cloud_disk/app/email/cmd/rpc/internal/svc"
+	"cloud_disk/app/email/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

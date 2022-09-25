@@ -1,7 +1,7 @@
 package rds
 
 import (
-	"core/app/common/vars"
+	"cloud_disk/app/common/vars"
 	"fmt"
 
 	"github.com/go-redis/redis/v8"

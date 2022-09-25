@@ -6,7 +6,7 @@ package emailcenter
 import (
 	"context"
 
-	"core/app/email/cmd/rpc/pb"
+	"cloud_disk/app/email/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"

@@ -1,12 +1,12 @@
 package svc
 
 import (
-	"core/app/common/db"
-	"core/app/common/rds"
-	"core/app/common/vars"
-	"core/app/email/cmd/rpc/emailcenter"
-	"core/app/user/cmd/rpc/internal/config"
-	"core/app/user/model"
+	"cloud_disk/app/common/db"
+	"cloud_disk/app/common/rds"
+	"cloud_disk/app/common/vars"
+	"cloud_disk/app/email/cmd/rpc/emailcenter"
+	"cloud_disk/app/user/cmd/rpc/internal/config"
+	"cloud_disk/app/user/model"
 
 	"github.com/go-redis/redis/v8"
 	"github.com/zeromicro/go-zero/zrpc"

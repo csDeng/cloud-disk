@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"core/app/user/cmd/api/internal/svc"
-	"core/app/user/cmd/api/internal/types"
-	"core/app/user/cmd/rpc/pb"
+	"cloud_disk/app/user/cmd/api/internal/svc"
+	"cloud_disk/app/user/cmd/api/internal/types"
+	"cloud_disk/app/user/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

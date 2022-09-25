@@ -2,8 +2,8 @@ package helper
 
 import (
 	"bytes"
+	"cloud_disk/app/common/vars"
 	"context"
-	"core/app/common/vars"
 	"io"
 	"net/http"
 	"net/url"

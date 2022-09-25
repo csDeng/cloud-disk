@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"time"
 
-	"core/app/common/helper"
-	"core/app/common/vars"
-	"core/app/email/cmd/rpc/emailcenter"
-	"core/app/user/cmd/rpc/internal/svc"
-	"core/app/user/cmd/rpc/pb"
+	"cloud_disk/app/common/helper"
+	"cloud_disk/app/common/vars"
+	"cloud_disk/app/email/cmd/rpc/emailcenter"
+	"cloud_disk/app/user/cmd/rpc/internal/svc"
+	"cloud_disk/app/user/cmd/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

@@ -4,9 +4,9 @@ import (
 	"flag"
 	"fmt"
 
-	"core/app/user/cmd/api/internal/config"
-	"core/app/user/cmd/api/internal/handler"
-	"core/app/user/cmd/api/internal/svc"
+	"cloud_disk/app/user/cmd/api/internal/config"
+	"cloud_disk/app/user/cmd/api/internal/handler"
+	"cloud_disk/app/user/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/rest"

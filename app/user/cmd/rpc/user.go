@@ -4,12 +4,12 @@ import (
 	"flag"
 	"fmt"
 
-	"core/app/common/vars"
-	"core/app/user/cmd/rpc/internal/config"
-	"core/app/user/cmd/rpc/internal/server"
-	"core/app/user/cmd/rpc/internal/svc"
-	"core/app/user/cmd/rpc/pb"
-	"core/app/user/cmd/rpc/user_helper"
+	"cloud_disk/app/common/vars"
+	"cloud_disk/app/user/cmd/rpc/internal/config"
+	"cloud_disk/app/user/cmd/rpc/internal/server"
+	"cloud_disk/app/user/cmd/rpc/internal/svc"
+	"cloud_disk/app/user/cmd/rpc/pb"
+	"cloud_disk/app/user/cmd/rpc/user_helper"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"

@@ -1,7 +1,7 @@
 package user_helper
 
 import (
-	"core/app/common/vars"
+	"cloud_disk/app/common/vars"
 	"log"
 )
 
