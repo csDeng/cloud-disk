@@ -129,8 +129,6 @@ type UserFile struct {
 type UserRepositoryRequest struct {
 	ParentId           int    `json:"parent_id"`
 	RepositoryIdentity string `json:"repository_identity"`
-	Ext                string `json:"ext"`
-	Name               string `json:"name"`
 }
 
 type UserRepositoryResponse struct {

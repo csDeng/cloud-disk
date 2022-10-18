@@ -36,4 +36,11 @@ var (
 	// 文件相关
 	ErrFileHasExisted = errors.New("当前文件已处在")
 	ErrFileCreate     = errors.New("文件创建失败")
+	ErrFileNotExisted = errors.New("文件不存在")
+	ErrFileIsFolder   = errors.New("当前文件是一个目录")
+
+	// 文件夹相关
+	ErrFolderNotExisted = errors.New("文件目录不存在")
+	ErrParentNotExisted = errors.New("父目录不存在")
+	ErrCreateFolder     = errors.New("创建目录失败")
 )

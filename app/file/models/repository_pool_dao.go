@@ -13,6 +13,9 @@ type PoolDao interface {
 	// 查
 	// 检查文件是否在存储池
 	CheckFileIfExisted(Engine *xorm.Engine, hash string) (*RepositoryPool, error)
+
+	// 根据 identity 获取文件
+	GetFileWithIdentity(Engine *xorm.Engine, identity string) (*RepositoryPool, error)
 }
 
 func (m *RepositoryPool) AddFile(Engine *xorm.Engine, p *RepositoryPool) (bool, error) {
@@ -26,6 +29,15 @@ func (m *RepositoryPool) AddFile(Engine *xorm.Engine, p *RepositoryPool) (bool, 
 func (m *RepositoryPool) CheckFileIfExisted(Engine *xorm.Engine, hash string) (*RepositoryPool, error) {
 	rp := new(RepositoryPool)
 	_, err := Engine.Where("hash = ?", hash).Get(rp)
+	if err != nil {
+		return nil, err
+	}
+	return rp, nil
+}
+
+func (m *RepositoryPool) GetFileWithIdentity(Engine *xorm.Engine, identity string) (*RepositoryPool, error) {
+	rp := new(RepositoryPool)
+	_, err := Engine.Where("identity = ?", identity).Get(rp)
 	if err != nil {
 		return nil, err
 	}

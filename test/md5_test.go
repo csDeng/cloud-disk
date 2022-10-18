@@ -1,5 +1,11 @@
 package test
 
+import (
+	"cloud_disk/app/common/helper"
+	"fmt"
+	"testing"
+)
+
 // import (
 // 	"cloud_disk/app/helper"
 // 	"crypto/md5"
@@ -7,11 +13,11 @@ package test
 // 	"testing"
 // )
 
-// func TestMd5(t *testing.T) {
-// 	s := "test12345"
-// 	ss := helper.Md5(s)
-// 	fmt.Println(s, ss)
-// }
+func TestMd5(t *testing.T) {
+	s := "test123456"
+	ss := helper.Md5(s)
+	fmt.Println(ss)
+}
 
 // func TestMd5Sum(t *testing.T) {
 // 	secret := "hello"

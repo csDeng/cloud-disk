@@ -7,8 +7,8 @@ import (
 )
 
 func CreateFile(data []byte, ext string) (string, error) {
-
-	p := "../pool/" + helper.GenerateUuid() + ext
+	path := helper.GenerateUuid() + ext
+	p := "../pool/" + path
 	f, err := os.Create(p)
 	if err != nil {
 		return "", err
@@ -19,5 +19,5 @@ func CreateFile(data []byte, ext string) (string, error) {
 		return "", err
 	}
 	log.Println("create file=>", p)
-	return p, nil
+	return path, nil
 }

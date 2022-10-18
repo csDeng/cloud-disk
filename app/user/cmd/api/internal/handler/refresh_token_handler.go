@@ -1,10 +1,9 @@
 package handler
 
 import (
+	"cloud_disk/app/user/cmd/api/internal/logic"
+	"cloud_disk/app/user/cmd/api/internal/svc"
 	"net/http"
-
-	"cloud_disk/user/cmd/api/internal/logic"
-	"cloud_disk/user/cmd/api/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
 )

@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 
+	"cloud_disk/app/common/vars"
 	"cloud_disk/app/file/cmd/api/internal/svc"
 	"cloud_disk/app/file/cmd/api/internal/types"
 
@@ -23,8 +24,24 @@ func NewUserFileDelLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserF
 	}
 }
 
-func (l *UserFileDelLogic) UserFileDel(req *types.UserFileDelRequest) (resp *types.UserFileDelResponse, err error) {
-	// todo: add your logic here and delete this line
+func (l *UserFileDelLogic) UserFileDel(req *types.UserFileDelRequest, userIdentity string) (resp *types.UserFileDelResponse, err error) {
+	Engine, UserRep := l.svcCtx.Engine, l.svcCtx.UserRepository
 
-	return
+	// 检查是否是一个目录
+	b, err := UserRep.CheckFileIsFolder(Engine, userIdentity, req.Identity)
+	if err != nil {
+		return nil, err
+	}
+	if b {
+		return nil, vars.ErrFileIsFolder
+	}
+
+	b, err = UserRep.DelUserFile(Engine, req.Identity, userIdentity)
+	if err != nil {
+		return nil, err
+	}
+	if !b {
+		return nil, vars.ErrFileNotExisted
+	}
+	return nil, nil
 }

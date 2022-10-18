@@ -1,8 +1,8 @@
 package svc
 
 import (
-	"cloud_disk/user/cmd/api/internal/config"
-	"cloud_disk/user/cmd/rpc/usercenter"
+	"cloud_disk/app/user/cmd/api/internal/config"
+	"cloud_disk/app/user/cmd/rpc/usercenter"
 
 	"github.com/zeromicro/go-zero/zrpc"
 )
